@@ -39,6 +39,7 @@ using namespace cv;
 using namespace dnn;
 using namespace std;
 using namespace edge_sdk;
+using namespace edge_app;
 
 namespace edge_app {
 

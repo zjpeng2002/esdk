@@ -1,8 +1,13 @@
 #include "jpeg_recorder.h"
 #include "logger.h"
+#include "util_misc.h"    // 添加current_path_声明
+#include "sample_liveview.h" // 添加LiveviewSample完整定义
 #include <sys/stat.h>
 #include <ctime>
 #include <opencv2/highgui.hpp>
+
+using namespace edge_app;  // 添加命名空间
+using namespace cv;       // 添加OpenCV命名空间
 
 class JpegRecordProcessor : public ImageProcessor {
    public:
@@ -52,6 +57,6 @@ class JpegRecordProcessor : public ImageProcessor {
 };
 
 std::shared_ptr<ImageProcessor> JpegRecorder::Create(const std::string& name, 
-    std::shared_ptr<LiveviewSample> live_sample) {
+std::shared_ptr<LiveviewSample> live_sample) {
     return std::make_shared<JpegRecordProcessor>(name, live_sample);
 }

@@ -6,12 +6,12 @@
 #include <opencv2/core.hpp>
 #include "image_processor.h"
 
-class LiveviewSample;
-
+namespace edge_app {
 class JpegRecorder {
 public:
     static std::shared_ptr<ImageProcessor> Create(const std::string& name, 
         std::shared_ptr<LiveviewSample> live_sample);
 };
+} // namespace edge_app
 
-#endif // JPEG_RECORDER_H
+#endif
