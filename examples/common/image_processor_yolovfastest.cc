@@ -63,6 +63,12 @@ static const char* class_names[] = {
     "scissors",      "teddy bear",    "hair drier",    "toothbrush",
 };
 
+struct DetectionResult {
+    int class_id;
+    float confidence;
+    cv::Rect box;
+};
+
 int32_t ImageProcessorYolovFastest::Init() {
     if (GetCurrentFileDirPath(__FILE__, sizeof(cur_file_dir_path_),
                               cur_file_dir_path_) != 0) {
@@ -73,7 +79,7 @@ int32_t ImageProcessorYolovFastest::Init() {
              "%s/data/yolo-fastest-1.1_coco/yolo-fastest-1.1-xl.cfg",
              cur_file_dir_path_);
     snprintf(weights_file_dir_path_, kFilePathSizeMax,
-             "%sdata/yolo-fastest-1.1_coco/yolo-fastest-1.1-xl.weights",
+             "%s/data/yolo-fastest-1.1_coco/yolo-fastest-1.1-xl.weights",
              cur_file_dir_path_);
 
     DEBUG("%s, %s", prototxt_file_dir_path_, weights_file_dir_path_);
@@ -82,10 +88,17 @@ int32_t ImageProcessorYolovFastest::Init() {
     cv::namedWindow(show_name_.c_str(), cv::WINDOW_NORMAL);
     cv::resizeWindow(show_name_.c_str(), 960, 540);
     cv::moveWindow(show_name_.c_str(), rand()&0xFF, rand()&0xff);
+    
+    // 初始化拍照组件
+    live_sample_ = std::make_shared<LiveviewSample>(show_name_);
+    jpeg_recorder_ = std::make_shared<JpegRecordProcessor>(
+    show_name_ + "_YOLO", live_sample_);
+    
     return 0;
 }
 
 void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
+    std::vector<DetectionResult> detections; // 添加检测结果集合
     auto detect = [&](cv::Mat& frame, vector<Mat>& outs) {
         Mat blob;
         blobFromImage(frame, blob, 1 / 255.0, Size(320, 320), Scalar(0, 0, 0),
@@ -149,6 +162,16 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
             draw_pred(class_ids[idx], confidences[idx], box.x, box.y,
                       box.x + box.width, box.y + box.height, frame);
         }
+        
+        for (size_t i = 0; i < indices.size(); ++i) {
+            int idx = indices[i];
+            Rect box = boxes[idx];
+            draw_pred(class_ids[idx], confidences[idx], box.x, box.y,
+                      box.x + box.width, box.y + box.height, frame);
+            
+            // 添加检测结果到集合
+            detections.push_back({class_ids[idx], confidences[idx], box});
+        }
     };
 
     auto draw_fps = [&](cv::Mat& frame) {
@@ -171,6 +194,20 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
         imshow(show_name_.c_str(), frame);
         cv::waitKey(1);
     };
+
+    // 在检测结果处理部分添加
+    bool has_person = false;
+    for (const auto& detection : detections) {
+        if (detection.class_id == 0) {  // 假设0是person类别
+            has_person = true;
+            break;
+        }
+    }
+
+    // 检测到人员时触发拍照
+    if (has_person && jpeg_recorder_) {
+        jpeg_recorder_->Process(image);
+    }
 
     do_process();
 }

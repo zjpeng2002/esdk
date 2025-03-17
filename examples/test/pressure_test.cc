@@ -59,8 +59,7 @@ char media_file_save_root_dir[256];
 
 ErrorCode ESDKInit();
 
-static ErrorCode ReadMediaFile(const MediaFile& file,
-                               std::vector<uint8_t>& image) {
+static ErrorCode ReadMediaFile(const MediaFile& file,std::vector<uint8_t>& image) {
     char buf[1024 * 1024];
 
     auto fd = media_files_reader->Open(file.file_path);

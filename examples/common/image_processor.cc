@@ -45,13 +45,13 @@ ImageProcessor::~ImageProcessor() {}
 
 std::shared_ptr<ImageProcessor> CreateImageProcessor(
     const ImageProcessor::Options& option) {
-    if (option.name == std::string("display")) {
+    if (option.name == std::string("display")) {  // 显示处理器
         return std::make_shared<ImageDisplayProcessor>(option.alias, option.userdata);
-    }
-    if (option.name == std::string("yolovfastest")) {
+    } 
+    if (option.name == std::string("yolovfastest")) { // YOLO目标检测处理器
         return std::make_shared<ImageProcessorYolovFastest>(option.alias);
     }
-    return std::make_shared<UndefinedImageProcessor>(option.alias);
+    return std::make_shared<UndefinedImageProcessor>(option.alias); 
 }
 
 }  // namespace edge_app

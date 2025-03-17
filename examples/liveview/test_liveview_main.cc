@@ -27,7 +27,7 @@
 using namespace edge_sdk;
 using namespace edge_app;
 
-ErrorCode ESDKInit();
+ErrorCode ESDKInit();   // ESDK的初始化
 
 int main(int argc, char **argv) {
     auto rc = ESDKInit();
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     }
 
     int type = 0;
-    while (argc < 3 || (type = atoi(argv[1])) > 2) {
+    while (argc < 3 || (type = atoi(argv[1])) > 2) {   // atoi: 将string类型转换为int型 (小数点后抛弃 无法转换返回0)
         ERROR(
             "Usage: %s [CAMERA_TYPE] [QUALITY] [SOURCE] \nDESCRIPTION:\n "
             "CAMERA_TYPE: "

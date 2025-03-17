@@ -40,13 +40,13 @@ static ErrorCode InitOptions(Options& option) {
     option.serial_number = "SN0000100010101";
     option.firmware_version = {0, 1, 0, 0};
 
+    // 初始化开发者信息
     AppInfo app_info;
     app_info.app_name =
         std::string((char*)USER_APP_NAME, strlen(USER_APP_NAME));
     app_info.app_id = std::string((char*)USER_APP_ID, strlen(USER_APP_ID));
     app_info.app_key = std::string((char*)USER_APP_KEY, strlen(USER_APP_KEY));
-    app_info.app_license =
-        std::string((char*)USER_APP_LICENSE, strlen(USER_APP_LICENSE));
+    app_info.app_license = std::string((char*)USER_APP_LICENSE, strlen(USER_APP_LICENSE));
 
     option.app_info = app_info;
     LoggerConsole console = {kLevelDebug, PrintConsoleFunc, true};

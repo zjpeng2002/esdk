@@ -46,10 +46,13 @@ int main(int argc, char** argv) {
     auto payload_decoder = CreateStreamDecoder(decoder_option);
 
     // create payload image processor
+    // 修改原有处理器创建代码
     ImageProcessor::Options image_processor_option = {
         .name = std::string("yolovfastest"),
-        .alias = std::string("PlayloadCamera: Yolovfastest")};
+        .alias = std::string("YOLO_Detector")};
+        
     auto payload_image_processor = CreateImageProcessor(image_processor_option);
+
 
     if (0 != InitLiveviewSample(
         payload_liveview, Liveview::kCameraTypePayload, Liveview::kStreamQuality1080pHigh,

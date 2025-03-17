@@ -46,16 +46,14 @@ KeyStoreDefault::KeyStoreDefault() {
     if (!ret) printf("ERROR: can not get valid keys\n");
 }
 
-ErrorCode KeyStoreDefault::RSA2048_GetDERPrivateKey(
-    std::string& private_key) const {
+ErrorCode KeyStoreDefault::RSA2048_GetDERPrivateKey(std::string& private_key) const {
     if (rsa2048_public_key_->empty()) {
         return kErrorParamGetFailure;
     }
     private_key = *rsa2048_private_key_;
     return kOk;
 }
-ErrorCode KeyStoreDefault::RSA2048_GetDERPublicKey(
-    std::string& public_key) const {
+ErrorCode KeyStoreDefault::RSA2048_GetDERPublicKey(std::string& public_key) const {
     if (rsa2048_private_key_->empty()) {
         return kErrorParamGetFailure;
     }

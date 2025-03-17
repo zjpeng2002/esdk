@@ -58,9 +58,9 @@ int32_t StreamProcessorThread::SetImageProcessorThread(
 }
 
 void StreamProcessorThread::InputStream(const uint8_t* data, size_t length) {
-    std::lock_guard<std::mutex> l(decode_vector_mutex_);
-    decode_vector_.insert(decode_vector_.end(), data, data + length);
-    decode_vector_cv_.notify_one();
+    std::lock_guard<std::mutex> l(decode_vector_mutex_); // 互斥锁保护共享资源
+    decode_vector_.insert(decode_vector_.end(), data, data + length); // 数据写入缓冲区
+    decode_vector_cv_.notify_one(); // 通知等待线程
 }
 
 int32_t StreamProcessorThread::Start() {

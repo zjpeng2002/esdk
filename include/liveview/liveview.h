@@ -175,7 +175,7 @@ class Liveview {
 /**
  * @brief Get liveview module instance
  */
-std::shared_ptr<Liveview> CreateLiveview();
+std::shared_ptr<Liveview>   CreateLiveview();
 
 }  // namespace edge_sdk
 

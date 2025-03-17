@@ -76,6 +76,7 @@ endif (FFMPEG_FOUND)
 if (OpenCV_FOUND AND FFMPEG_FOUND)
     file(GLOB_RECURSE MODULE_SAMPLE_SRC
             ${MODULE_SAMPLE_SRC}
+            examples/test/pressure_test.cc  # 添加压力测试文件到公共库
             examples/liveview/sample_liveview.cc
             examples/liveview/stream_decoder.cc
             examples/liveview/ffmpeg_stream_decoder.cc
@@ -89,6 +90,14 @@ if (OpenCV_FOUND AND FFMPEG_FOUND)
     link_libraries(${FFMPEG_LIBRARIES})
     add_executable(sample_liveview  examples/liveview/sample_liveview_main.cc)
     target_link_libraries(sample_liveview ${SAMPLE_LIB})
+
+    add_library(image_processor_yolovfastest STATIC 
+    examples/common/image_processor_yolovfastest.cc)
+    target_link_libraries(image_processor_yolovfastest
+    ${OpenCV_LIBS}
+    ${SAMPLE_LIB}
+    ${FFMPEG_LIBRARIES}
+    )
 
     add_executable(test_liveview examples/liveview/test_liveview_main.cc)
     add_executable(test_liveview_dual examples/liveview/test_liveview_dual_main.cc)
