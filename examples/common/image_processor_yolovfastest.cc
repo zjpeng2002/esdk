@@ -29,6 +29,8 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <sstream>
+#include "jpeg_recorder.h"
+
 
 #include "logger.h"
 #include "util_misc.h"
@@ -91,9 +93,7 @@ int32_t ImageProcessorYolovFastest::Init() {
     
     // 初始化拍照组件
     live_sample_ = std::make_shared<LiveviewSample>(show_name_);
-    jpeg_recorder_ = std::make_shared<JpegRecordProcessor>(
-    show_name_ + "_YOLO", live_sample_);
-    
+    jpeg_recorder_ = std::make_shared<JpegRecordProcessor>(show_name_ + "_YOLO", live_sample_);
     return 0;
 }
 
@@ -198,7 +198,7 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
     // 在检测结果处理部分添加
     bool has_person = false;
     for (const auto& detection : detections) {
-        if (detection.class_id == 0) {  // 假设0是person类别
+        if (detection.class_id == 0) {  // 检测到person
             has_person = true;
             break;
         }

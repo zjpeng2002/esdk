@@ -76,12 +76,12 @@ endif (FFMPEG_FOUND)
 if (OpenCV_FOUND AND FFMPEG_FOUND)
     file(GLOB_RECURSE MODULE_SAMPLE_SRC
             ${MODULE_SAMPLE_SRC}
-            examples/test/pressure_test.cc  # 添加压力测试文件到公共库
             examples/liveview/sample_liveview.cc
             examples/liveview/stream_decoder.cc
             examples/liveview/ffmpeg_stream_decoder.cc
             examples/liveview/image_processor_thread.cc
             examples/liveview/stream_processor_thread.cc
+            examples/common/jpeg_recorder.cc
             examples/common/util_misc.cc
             examples/common/image_processor.cc
             examples/common/image_processor_yolovfastest.cc)
@@ -90,14 +90,6 @@ if (OpenCV_FOUND AND FFMPEG_FOUND)
     link_libraries(${FFMPEG_LIBRARIES})
     add_executable(sample_liveview  examples/liveview/sample_liveview_main.cc)
     target_link_libraries(sample_liveview ${SAMPLE_LIB})
-
-    add_library(image_processor_yolovfastest STATIC 
-    examples/common/image_processor_yolovfastest.cc)
-    target_link_libraries(image_processor_yolovfastest
-    ${OpenCV_LIBS}
-    ${SAMPLE_LIB}
-    ${FFMPEG_LIBRARIES}
-    )
 
     add_executable(test_liveview examples/liveview/test_liveview_main.cc)
     add_executable(test_liveview_dual examples/liveview/test_liveview_dual_main.cc)
@@ -109,6 +101,8 @@ if (OpenCV_FOUND AND FFMPEG_FOUND)
 endif ()
 
 add_library(${SAMPLE_LIB} STATIC ${MODULE_SAMPLE_SRC})
+
+
 
 add_executable(sample_read_media_file examples/media_manager/sample_read_media_file.cc)
 target_link_libraries(sample_read_media_file ${SAMPLE_LIB})
@@ -125,4 +119,3 @@ target_link_libraries(sample_cloud_api ${SAMPLE_LIB})
 if (NOT EXECUTABLE_OUTPUT_PATH)
     set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 endif ()
-

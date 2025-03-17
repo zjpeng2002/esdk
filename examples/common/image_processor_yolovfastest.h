@@ -26,7 +26,6 @@
 
 #include "image_processor.h"
 #include "opencv2/dnn.hpp"
-#include "../test/pressure_test.cc"  // 包含JpegRecordProcessor定义
 
 
 namespace edge_app {
@@ -40,10 +39,6 @@ class ImageProcessorYolovFastest : public ImageProcessor {
     void Process(const std::shared_ptr<Image> image) override;
 
    private:
-    std::string show_name_;
-    std::shared_ptr<JpegRecordProcessor> jpeg_recorder_; 
-    std::shared_ptr<LiveviewSample> live_sample_;
-
     enum {
         kFilePathSizeMax = 256,
         kCurrentFilePathSizeMax = 128,
