@@ -11,7 +11,9 @@
 #include "logger.h"
 #include "util_misc.h"
 #include "liveview/sample_liveview.h"
+char current_path_[128];
 
+using namespace cv; 
 namespace edge_app {
 
 class JpegRecordProcessor : public ImageProcessor {
@@ -29,6 +31,8 @@ class JpegRecordProcessor : public ImageProcessor {
         }
         INFO("jpegaa recorder init successfully");
     }
+
+    ~JpegRecordProcessor() override {};
 
     void Process(const std::shared_ptr<Image> image) override {
         std::string h = std::to_string(image->size().width);

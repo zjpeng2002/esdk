@@ -26,7 +26,6 @@
 #include "image_processor.h"
 #include "opencv2/dnn.hpp"
 
-
 namespace edge_app {
 class ImageProcessorYolovFastest : public ImageProcessor {
    public:
