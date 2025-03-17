@@ -21,9 +21,8 @@
  */
 #ifndef __IMAGE_PROCESSOR_YOLOV_FASTEST_H__
 #define __IMAGE_PROCESSOR_YOLOV_FASTEST_H__
-
+#include "jpeg_recorder.h"
 #include <memory>
-
 #include "image_processor.h"
 #include "opencv2/dnn.hpp"
 
@@ -39,6 +38,9 @@ class ImageProcessorYolovFastest : public ImageProcessor {
     void Process(const std::shared_ptr<Image> image) override;
 
    private:
+    std::string show_name_;
+    std::shared_ptr<JpegRecordProcessor> jpeg_recorder_;  
+    std::shared_ptr<LiveviewSample> live_sample_;        
     enum {
         kFilePathSizeMax = 256,
         kCurrentFilePathSizeMax = 128,
