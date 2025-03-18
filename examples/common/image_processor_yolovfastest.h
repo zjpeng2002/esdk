@@ -27,12 +27,6 @@
 #include "opencv2/dnn.hpp"
 
 namespace edge_app {
-    
-struct DetectionResult {
-    int class_id;
-    float confidence;
-    cv::Rect box;
-};
 class ImageProcessorYolovFastest : public ImageProcessor {
    public:
     ImageProcessorYolovFastest(const std::string& name) : show_name_(name) {}
@@ -43,7 +37,6 @@ class ImageProcessorYolovFastest : public ImageProcessor {
     void Process(const std::shared_ptr<Image> image) override;
 
    private:
-   std::vector<DetectionResult>detections_ ;
     std::string show_name_;
     std::shared_ptr<JpegRecordProcessor> jpeg_recorder_;  
     std::shared_ptr<LiveviewSample> live_sample_;        

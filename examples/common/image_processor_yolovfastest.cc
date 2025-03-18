@@ -160,8 +160,6 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
                 INFO("检测到人员,触发拍照");
                 jpeg_recorder_->Process(image);
             }
-            detections_.push_back({class_ids[idx], confidences[idx], box});
-            INFO("Detections id: %d", detections_[idx].class_id); // 打印检测结果
         }
     };
 
