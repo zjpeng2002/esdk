@@ -93,7 +93,6 @@ int32_t ImageProcessorYolovFastest::Init() {
 }
 
 void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
-    detections_.clear(); // 每次处理前清空
     auto detect = [&](cv::Mat& frame, vector<Mat>& outs) {
         Mat blob;
         blobFromImage(frame, blob, 1 / 255.0, Size(320, 320), Scalar(0, 0, 0),
@@ -154,11 +153,10 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
         for (size_t i = 0; i < indices.size(); ++i) {
             int idx = indices[i];
             Rect box = boxes[idx];
-            draw_pred(class_ids[idx], confidences[idx], box.x, box.y,box.x + box.width, box.y + box.height, frame);
-            // 将检测结果添加到集合中
-            if(class_ids[idx] == 0 && confidences[idx] > 0.5 && jpeg_recorder_){
+            if(class_ids[idx] == 0 && confidences[idx] > 0.7 && jpeg_recorder_){
                 INFO("检测到人员,触发拍照");
                 jpeg_recorder_->Process(image);
+                draw_pred(class_ids[idx], confidences[idx], box.x, box.y,box.x + box.width, box.y + box.height, frame);
             }
         }
     };
