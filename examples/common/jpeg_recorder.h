@@ -5,21 +5,27 @@
 #include <memory>
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 #include <sys/stat.h>
 #include <ctime>
 #include "image_processor.h"
 #include "logger.h"
 #include "util_misc.h"
 #include "liveview/sample_liveview.h"
-char current_path_[128];
 
 using namespace cv; 
 namespace edge_app {
 
+char current_path_[128];
 class JpegRecordProcessor : public ImageProcessor {
    public:
     JpegRecordProcessor(const std::string& name, std::shared_ptr<LiveviewSample> live_sample) 
-        : name_(name), liveview_sample_(live_sample) {
+        : name_(name), liveview_sample_(live_sample) 
+          if (GetCurrentFileDirPath(__FILE__, sizeof(current_path_), current_path_) !=
+        0) {
+        WARN("get path failed");
+        snprintf(current_path_, sizeof(current_path_), "/tmp/");
+
         snprintf(file_path_, sizeof(file_path_), "%s../../build/%s",
                  current_path_, "video2jpeg");
         char cmd[532];
