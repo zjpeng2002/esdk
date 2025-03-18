@@ -66,12 +66,6 @@ static const char* class_names[] = {
     "scissors",      "teddy bear",    "hair drier",    "toothbrush",
 };
 
-struct DetectionResult {
-    int class_id;
-    float confidence;
-    cv::Rect box;
-};
-
 int32_t ImageProcessorYolovFastest::Init() {
     if (GetCurrentFileDirPath(__FILE__, sizeof(cur_file_dir_path_),
                               cur_file_dir_path_) != 0) {
@@ -99,7 +93,7 @@ int32_t ImageProcessorYolovFastest::Init() {
 }
 
 void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
-    std::vector<DetectionResult> detections; // 添加检测结果集合
+    detections_.clear(); // 每次处理前清空
     auto detect = [&](cv::Mat& frame, vector<Mat>& outs) {
         Mat blob;
         blobFromImage(frame, blob, 1 / 255.0, Size(320, 320), Scalar(0, 0, 0),
@@ -160,18 +154,10 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
         for (size_t i = 0; i < indices.size(); ++i) {
             int idx = indices[i];
             Rect box = boxes[idx];
-            draw_pred(class_ids[idx], confidences[idx], box.x, box.y,
-                      box.x + box.width, box.y + box.height, frame);
-        }
-        
-        for (size_t i = 0; i < indices.size(); ++i) {
-            int idx = indices[i];
-            Rect box = boxes[idx];
-            draw_pred(class_ids[idx], confidences[idx], box.x, box.y,
-                      box.x + box.width, box.y + box.height, frame);
-            
-            // 添加检测结果到集合
-            detections.push_back({class_ids[idx], confidences[idx], box});
+            draw_pred(class_ids[idx], confidences[idx], box.x, box.y,box.x + box.width, box.y + box.height, frame);
+            // 将检测结果添加到集合中
+            detections_.push_back({class_ids[idx], confidences[idx], box});
+            INFO("Detections count: %d", detections_.size());
         }
     };
 
@@ -198,7 +184,7 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
 
     // 在检测结果处理部分添加
     bool has_person = false;
-    for (const auto& detection : detections) {
+    for (const auto& detections_ : detections_) {
         if (detection.class_id == 0) {  // 检测到person
             has_person = true;
             break;
@@ -212,5 +198,4 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
 
     do_process();
 }
-
 }  // namespace edge_app

@@ -21,14 +21,20 @@ class JpegRecordProcessor : public ImageProcessor {
    public:
     JpegRecordProcessor(const std::string& name, std::shared_ptr<LiveviewSample> live_sample) 
         : name_(name), liveview_sample_(live_sample) {
-        snprintf(file_path_, sizeof(file_path_), "%s../../build/%s",
-                 "common", "video2jpeg");
+        char current_dir[256];
+        if (GetCurrentFileDirPath(__FILE__, sizeof(current_dir), current_dir) != 0) {
+            WARN("get current directory failed");
+            return;
+        }
+        snprintf(file_path_, sizeof(file_path_), "%s/../../build/%s", current_dir, "video2jpeg");
+    
         char cmd[532];
-        snprintf(cmd, sizeof(cmd), "[ -d %s] || mkdir %s -p", file_path_,
-                 file_path_);
+        snprintf(cmd, sizeof(cmd), "mkdir -p %s", file_path_);
         auto ret = system(cmd);
         if (ret != 0) {
             WARN("mkdir %s failed", file_path_);
+        } else {
+            INFO("Created directory: %s", file_path_);
         }
         INFO("jpegaa recorder init successfully");
     }
@@ -66,13 +72,6 @@ class JpegRecordProcessor : public ImageProcessor {
     char file_path_[256];
 };
 
-class JpegRecorder {
-public:
-    static std::shared_ptr<ImageProcessor> Create(const std::string& name, 
-        std::shared_ptr<LiveviewSample> live_sample) {
-        return std::make_shared<JpegRecordProcessor>(name, live_sample);
-    }
-};
 } // namespace edge_app
 
 #endif
