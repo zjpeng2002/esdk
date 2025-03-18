@@ -16,18 +16,13 @@
 using namespace cv; 
 namespace edge_app {
 
-char current_path_[128];
+
 class JpegRecordProcessor : public ImageProcessor {
    public:
     JpegRecordProcessor(const std::string& name, std::shared_ptr<LiveviewSample> live_sample) 
-        : name_(name), liveview_sample_(live_sample) 
-          if (GetCurrentFileDirPath(__FILE__, sizeof(current_path_), current_path_) !=
-        0) {
-        WARN("get path failed");
-        snprintf(current_path_, sizeof(current_path_), "/tmp/");
-
+        : name_(name), liveview_sample_(live_sample) {
         snprintf(file_path_, sizeof(file_path_), "%s../../build/%s",
-                 current_path_, "video2jpeg");
+                 "common", "video2jpeg");
         char cmd[532];
         snprintf(cmd, sizeof(cmd), "[ -d %s] || mkdir %s -p", file_path_,
                  file_path_);
