@@ -22,10 +22,10 @@
 #ifndef __APP_INFO_H__
 #define __APP_INFO_H__
 
-#define USER_APP_NAME "your_app_name"
-#define USER_APP_ID "your_app_id"
-#define USER_APP_KEY "your_app_key"
-#define USER_APP_LICENSE "your_app_license"
-#define USER_DEVELOPER_ACCOUNT "your_developer_account"
+#define USER_APP_NAME "fire detector"
+#define USER_APP_ID "158556"
+#define USER_APP_KEY "e5280061c2e43657186abda0956edcc"
+#define USER_APP_LICENSE "dX2cMkD3I4utbSYXEbW5zIkTXzHMRzqhBGdOA7mnKMvB6h44g8fqGcBCA4VZVjv/ZloIJxG7yB50qT/0FmGvjWcI8XsDy0MPBg/WKjTPk+wTvLtaLTn0LMch4ICENNsePEQkB1/XUHKfqX7Ymbh8u49MeWfB92NvXWbpRvnHIQPEwLW0AvZ5+NIfQpe+keBVKTShcTlY0FPnung/LvzCA65wyRQxTzgjojm6DIIFKOSztq1B75TnO2vWU77OcQk/qGn2ezT1YKFnOJWTTeWntffjbzAxwxwXDVeHm79CtYr9LX0ydRKITdDuBvvWFpafEdk94oOkp6tXjq1++gle2A=="
+#define USER_DEVELOPER_ACCOUNT "zxwlzxwl****@outlook.com"
 
 #endif

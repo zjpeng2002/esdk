@@ -43,7 +43,7 @@ class ImageProcessorYolovFastest : public ImageProcessor {
     void Process(const std::shared_ptr<Image> image) override;
 
    private:
-   std::vector<DetectionResult>detections_ 
+   std::vector<DetectionResult>detections_ ;
     std::string show_name_;
     std::shared_ptr<JpegRecordProcessor> jpeg_recorder_;  
     std::shared_ptr<LiveviewSample> live_sample_;        

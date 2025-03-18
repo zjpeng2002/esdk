@@ -156,8 +156,12 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
             Rect box = boxes[idx];
             draw_pred(class_ids[idx], confidences[idx], box.x, box.y,box.x + box.width, box.y + box.height, frame);
             // 将检测结果添加到集合中
+            if(class_ids[idx] == 0 && confidences[idx] > 0.5 && jpeg_recorder_){
+                INFO("检测到人员,触发拍照");
+                jpeg_recorder_->Process(image);
+            }
             detections_.push_back({class_ids[idx], confidences[idx], box});
-            INFO("Detections count: %d", detections_.size());
+            INFO("Detections id: %d", detections_[idx].class_id); // 打印检测结果
         }
     };
 
@@ -181,20 +185,6 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
         imshow(show_name_.c_str(), frame);
         cv::waitKey(1);
     };
-
-    // 在检测结果处理部分添加
-    bool has_person = false;
-    for (const auto& detections_ : detections_) {
-        if (detection.class_id == 0) {  // 检测到person
-            has_person = true;
-            break;
-        }
-    }
-
-    // 检测到人员时触发拍照
-    if (has_person && jpeg_recorder_) {
-        jpeg_recorder_->Process(image);
-    }
 
     do_process();
 }
