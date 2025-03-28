@@ -1,7 +1,0 @@
-/home/yxy/esdk/build/CMakeFiles/sample_read_media_file.dir
-/home/yxy/esdk/build/CMakeFiles/rebuild_cache.dir
-/home/yxy/esdk/build/CMakeFiles/edge_sample.dir
-/home/yxy/esdk/build/CMakeFiles/sample_cloud_api.dir
-/home/yxy/esdk/build/CMakeFiles/sample_media_file_list.dir
-/home/yxy/esdk/build/CMakeFiles/sample_set_upload_cloud_strategy.dir
-/home/yxy/esdk/build/CMakeFiles/edit_cache.dir
