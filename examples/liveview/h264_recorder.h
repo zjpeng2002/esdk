@@ -13,7 +13,6 @@
 
 using namespace cv;
 
-
 namespace  edge_app{
 class StreamDecodeRecorder : public StreamDecoder {
     public:

@@ -16,7 +16,6 @@
 using namespace cv; 
 namespace edge_app {
 
-
 class JpegRecordProcessor : public ImageProcessor {
    public:
     JpegRecordProcessor(const std::string& name, std::shared_ptr<LiveviewSample> live_sample) 

@@ -81,7 +81,6 @@ if (OpenCV_FOUND AND FFMPEG_FOUND)
             examples/liveview/ffmpeg_stream_decoder.cc
             examples/liveview/image_processor_thread.cc
             examples/liveview/stream_processor_thread.cc
-            examples/common/jpeg_recorder.cc
             examples/common/util_misc.cc
             examples/common/image_processor.cc
             examples/common/image_processor_yolovfastest.cc)

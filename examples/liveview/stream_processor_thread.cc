@@ -24,7 +24,7 @@
 #include <cerrno>
 #include <cstring>
 
-#include <h264_decoder.h>
+#include "h264_recorder.h"
 #include "image_processor_thread.h"
 #include "logger.h"
 #include "stream_decoder.h"
