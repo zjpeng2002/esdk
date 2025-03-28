@@ -57,7 +57,9 @@ ErrorCode LiveviewSample::StreamCallback(const uint8_t* data, size_t len)
     return kOk;
 }
 
-ErrorCode LiveviewSample::Init(Liveview::CameraType type, Liveview::StreamQuality quality,std::shared_ptr<StreamProcessorThread> processor)  
+ErrorCode LiveviewSample::Init(Liveview::CameraType type, 
+Liveview::StreamQuality quality,
+std::shared_ptr<StreamProcessorThread> processor)  
  {
     stream_processor_thread_ = processor; // 将外部线程对象存入成员变量
     auto stream_callback =std::bind
@@ -107,7 +109,11 @@ void LiveviewSample::LiveviewStatusCallback(const Liveview::LiveviewStatus& stat
     DEBUG("status: %d", status);
 }
 
-int32_t InitLiveviewSample(std::shared_ptr<LiveviewSample>& liveview_sample, edge_sdk::Liveview::CameraType type,edge_sdk::Liveview::StreamQuality quality,std::shared_ptr<StreamDecoder> stream_decoder,std::shared_ptr<ImageProcessor> image_processor)
+int32_t InitLiveviewSample(std::shared_ptr<LiveviewSample>& liveview_sample, 
+edge_sdk::Liveview::CameraType type,
+edge_sdk::Liveview::StreamQuality quality,
+std::shared_ptr<StreamDecoder> stream_decoder,
+std::shared_ptr<ImageProcessor> image_processor)
 {
     // 原始流数据 → StreamDecoder 解码 → 图像帧 → ImageProcessor 处理 → 输出结果
     // 创建ImageProcessorThread 的图像处理线程，绑定解码器，注入图像处理逻辑

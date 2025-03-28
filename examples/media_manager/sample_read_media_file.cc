@@ -159,7 +159,7 @@ int main(int argc, char** argv) {
     } else {
         // 如果设置失败，记录错误日志
         ERROR("set media file auto delete failed");
-    }
+    } 
 
     // 主循环，每3秒休眠一次，保持程序运行
     while (1) sleep(3);

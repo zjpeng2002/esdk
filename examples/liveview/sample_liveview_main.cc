@@ -25,6 +25,7 @@
 #include "image_processor.h"
 #include "logger.h"
 #include "sample_liveview.h"
+#include"h264_recorder.h"
 
 using namespace edge_sdk;
 using namespace edge_app;
@@ -44,9 +45,9 @@ int main(int argc, char** argv) {
     StreamDecoder::Options decoder_option = {.name = std::string("ffmpeg")};
     // create payload decoder
     auto payload_decoder = CreateStreamDecoder(decoder_option);
+    auto stream_recorder = std::make_shared<StreamDecodeRecorder>("payload", payload_decoder);
 
     // create payload image processor
-    // 修改原有处理器创建代码
     ImageProcessor::Options image_processor_option = {
         .name = std::string("yolovfastest"),
         .alias = std::string("YOLO_Detector")};
@@ -55,8 +56,11 @@ int main(int argc, char** argv) {
 
 
     if (0 != InitLiveviewSample(
-        payload_liveview, Liveview::kCameraTypePayload, Liveview::kStreamQuality1080pHigh,
-        payload_decoder, payload_image_processor)) {
+        payload_liveview, 
+        Liveview::kCameraTypePayload,
+         Liveview::kStreamQuality1080pHigh,
+        stream_recorder,
+        payload_image_processor)) {
         ERROR("Init fpv liveview sample failed");
     } else {
         // start payload liveview
