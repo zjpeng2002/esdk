@@ -44,26 +44,7 @@ using namespace edge_app;
 namespace edge_app {
 
 static const char* class_names[] = {
-    "person",        "bicycle",       "car",           "motorbike",
-    "aeroplane",     "bus",           "train",         "truck",
-    "boat",          "traffic light", "fire hydrant",  "stop sign",
-    "parking meter", "bench",         "bird",          "cat",
-    "dog",           "horse",         "sheep",         "cow",
-    "elephant",      "bear",          "zebra",         "giraffe",
-    "backpack",      "umbrella",      "handbag",       "tie",
-    "suitcase",      "frisbee",       "skis",          "snowboard",
-    "sports ball",   "kite",          "baseball bat",  "baseball glove",
-    "skateboard",    "surfboard",     "tennis racket", "bottle",
-    "wine glass",    "cup",           "fork",          "knife",
-    "spoon",         "bowl",          "banana",        "apple",
-    "sandwich",      "orange",        "broccoli",      "carrot",
-    "hot dog",       "pizza",         "donut",         "cake",
-    "chair",         "sofa",          "pottedplant",   "bed",
-    "diningtable",   "toilet",        "tvmonitor",     "laptop",
-    "mouse",         "remote",        "keyboard",      "cell phone",
-    "microwave",     "oven",          "toaster",       "sink",
-    "refrigerator",  "book",          "clock",         "vase",
-    "scissors",      "teddy bear",    "hair drier",    "toothbrush",
+    "fire","smoke",
 };
 
 int32_t ImageProcessorYolovFastest::Init() {
@@ -73,10 +54,10 @@ int32_t ImageProcessorYolovFastest::Init() {
         return -1;
     }
     snprintf(prototxt_file_dir_path_, kFilePathSizeMax,
-             "%s/data/yolo-fastest-1.1_coco/yolo-fastest-1.1-xl.cfg",
+             "%s/data/yolo-fastest-1.1_coco/yolov.cfg",
              cur_file_dir_path_);
     snprintf(weights_file_dir_path_, kFilePathSizeMax,
-             "%s/data/yolo-fastest-1.1_coco/yolo-fastest-1.1-xl.weights",
+             "%s/data/yolo-fastest-1.1_coco/yolov.weights",
              cur_file_dir_path_);
 
     DEBUG("%s, %s", prototxt_file_dir_path_, weights_file_dir_path_);
@@ -154,7 +135,7 @@ void ImageProcessorYolovFastest::Process(const std::shared_ptr<Image> image) {
             int idx = indices[i];
             Rect box = boxes[idx];
             if(class_ids[idx] == 0 && confidences[idx] > 0.7 && jpeg_recorder_){
-                INFO("检测到人员,触发拍照");
+                INFO("检测到火,触发拍照");
                 jpeg_recorder_->Process(image);
                 draw_pred(class_ids[idx], confidences[idx], box.x, box.y,box.x + box.width, box.y + box.height, frame);
             }

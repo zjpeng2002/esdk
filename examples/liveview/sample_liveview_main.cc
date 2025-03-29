@@ -67,25 +67,25 @@ int main(int argc, char** argv) {
         payload_liveview->Start();
     }
 
-    // create fpv liveview
-    auto fpv_liveview = std::make_shared<LiveviewSample>("Fpv");
+    // // create fpv liveview
+    // auto fpv_liveview = std::make_shared<LiveviewSample>("Fpv");
 
-    // create fpv stream decoder
-    auto fpv_decoder = CreateStreamDecoder(decoder_option);
+    // // create fpv stream decoder
+    // auto fpv_decoder = CreateStreamDecoder(decoder_option);
 
-    // create fpv image processor
-    ImageProcessor::Options fpv_image_processor_option = {
-        .name = std::string("display"), .alias = std::string("FPVCamera"), .userdata = fpv_liveview};
-    auto fpv_image_processor = CreateImageProcessor(fpv_image_processor_option);
+    // // create fpv image processor
+    // ImageProcessor::Options fpv_image_processor_option = {
+    //     .name = std::string("display"), .alias = std::string("FPVCamera"), .userdata = fpv_liveview};
+    // auto fpv_image_processor = CreateImageProcessor(fpv_image_processor_option);
 
-    if (0 != InitLiveviewSample(
-        fpv_liveview, Liveview::kCameraTypeFpv, Liveview::kStreamQuality720p,
-        fpv_decoder, fpv_image_processor)) {
-        ERROR("Init fpv liveview sample failed");
-    } else {
-        // start fpv liveview
-        fpv_liveview->Start();
-    }
+    // if (0 != InitLiveviewSample(
+    //     fpv_liveview, Liveview::kCameraTypeFpv, Liveview::kStreamQuality720p,
+    //     fpv_decoder, fpv_image_processor)) {
+    //     ERROR("Init fpv liveview sample failed");
+    // } else {
+    //     // start fpv liveview
+    //     fpv_liveview->Start();
+    // }
 
     while (1) sleep(3);
 
